@@ -48,6 +48,7 @@
         <th style="width: 15px; min-width: 15px;"></th>
         <th>Worker Name</th>
         <th>Status</th>
+        <th>Queues</th>
         <th>Active</th>
         <th>Processed</th>
         <th>Failed</th>
@@ -68,6 +69,7 @@
           <span class="label label-important">Offline</span>
           {% end %}
         </td>
+        <td> {{ ', '.join(info.get('queues', [])) }} </td>
         <td>{{ info['active'] }}</td>
         <td>{{ info.get('task-received', 0) }}</td>
         <td>{{ info.get('task-failed', 0) }}</td>

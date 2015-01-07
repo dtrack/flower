@@ -13,6 +13,7 @@ from tornado import websocket
 from tornado.ioloop import PeriodicCallback
 
 from ..views import BaseHandler
+from ..api.workers import ListWorkers
 
 
 logger = logging.getLogger(__name__)
@@ -25,11 +26,16 @@ class DashboardView(BaseHandler):
         events = app.events.state
         broker = app.capp.connection().as_uri()
 
+
         workers = dict((k, dict(v)) for (k, v) in events.counter.items())
+
         for name, info in workers.items():
             worker = events.workers[name]
+            extra_info = ListWorkers.worker_cache.get(name, {})
             info.update(self._as_dict(worker))
             info.update(status=worker.alive)
+            info.update(queues=[
+                queue['name'] for queue in extra_info.get('active_queues', [])])
         self.render("dashboard.html", workers=workers, broker=broker)
 
     @classmethod

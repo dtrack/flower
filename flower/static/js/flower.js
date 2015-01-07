@@ -352,16 +352,18 @@ var flower = (function () {
             }
 
             var stat = tr.children('td:eq(2)').children(),
-                active = tr.children('td:eq(3)'),
-                processed = tr.children('td:eq(4)'),
-                failed = tr.children('td:eq(5)'),
-                succeeded = tr.children('td:eq(6)'),
-                retried = tr.children('td:eq(7)'),
-                loadavg = tr.children('td:eq(8)');
+                queues = tr.children('td:eq(3'),
+                active = tr.children('td:eq(4)'),
+                processed = tr.children('td:eq(5)'),
+                failed = tr.children('td:eq(6)'),
+                succeeded = tr.children('td:eq(7)'),
+                retried = tr.children('td:eq(8)'),
+                loadavg = tr.children('td:eq(9)');
 
             stat.text($(this).attr('status') ? "Online" : "Offline");
             stat.removeClass("label-success label-important");
             stat.addClass($(this).attr('status') ? "label-success" : "label-important");
+            queues.text($(this).attr('queues'));
             active.text($(this).attr('active'));
             processed.text($(this).attr('processed'));
             failed.text($(this).attr('failed'));
